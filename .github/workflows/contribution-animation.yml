@@ -1,0 +1,33 @@
+name: Mohammad Saiful Haque – Profile Contribution Animation
+
+on:
+  schedule:
+    # Run every 12 hours
+    - cron: "0 */12 * * *"
+
+  workflow_dispatch:
+
+  push:
+    branches:
+      - main
+
+jobs:
+  generate-contribution-animation:
+    permissions:
+      contents: write
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+
+    steps:
+      - name: Generate Pacman contribution graph for mohdsaifulhaq18
+        uses: abozanona/pacman-contribution-graph@main
+        with:
+          github_user_name: mohdsaifulhaq18
+
+      - name: Publish contribution animation to output branch
+        uses: crazy-max/ghaction-github-pages@v3.1.0
+        with:
+          target_branch: output
+          build_dir: dist
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
